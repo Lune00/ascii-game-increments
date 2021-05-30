@@ -24,36 +24,46 @@
 
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d')
-        let previousTimeStamp;
+        let tminus = 0;
 
         function init() {
             window.requestAnimationFrame(gameLoop)
         }
 
-        function gameLoop(timeStamp) {
+        function gameLoop(t) {
 
             //Calcul du FPS
-            const elpasedTimeInMiliseconds = timeStamp - previousTimeStamp
-            const elapsedTimeInSeconds = elpasedTimeInMiliseconds / 1000
-            previousTimeStamp = timeStamp
-            const fps = Math.round(1 / elapsedTimeInSeconds)
+            const elpasedTimeInMiliseconds = t - tminus
+            const dt = elpasedTimeInMiliseconds / 1000
 
-            const text = 'fps:' + fps
-            const textMetrics = context.measureText(text)
-            context.fillStyle = 'black'
-            context.fillRect(0, 0, textMetrics.width, 25)
-            context.fillStyle = 'white'
-            context.font = '25px Arial'
-            context.textBaseline = 'top'
+            //Correction (borner le pas de temps si trop grand)
+            const dt_max = Math.min(dt, 0.1)
 
-            context.fillText(text, 0, 0)
+            tminus = t
 
+            update(dt)
             draw()
             window.requestAnimationFrame(gameLoop)
         }
 
-        function draw() {
+        let rectX = 0
+        let rectY = 0
+        const vx = 50
+        const vy = 50
 
+        function update(dt) {
+            rectX += vx * dt
+            rectY += vy * dt
+        }
+
+
+        function draw() {
+            //Clear the entire canvas
+            context.clearRect(0, 0, canvas.width, canvas.height)
+
+            //Render the last state of the game
+            context.fillStyle = '#ff8080';
+            context.fillRect(rectX, rectY, 150, 100);
         }
     </script>
 </body>

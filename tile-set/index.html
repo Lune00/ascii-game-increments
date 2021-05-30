@@ -13,6 +13,9 @@
 
     <p>Hello there</p>
 
+
+    <img src="./assets/curses_640x300.bmp" id="tileset" alt="" style="display: block;">
+
     <canvas id="canvas" width="750" height="400" style="border:1px solid lightgrey;">
         Your browser does not support the HTML5 canvas tag.
     </canvas>
@@ -25,34 +28,27 @@
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d')
         let previousTimeStamp;
+        var asset
 
         function init() {
+            asset = document.getElementById('tileset')
             window.requestAnimationFrame(gameLoop)
         }
 
         function gameLoop(timeStamp) {
-
-            //Calcul du FPS
-            const elpasedTimeInMiliseconds = timeStamp - previousTimeStamp
-            const elapsedTimeInSeconds = elpasedTimeInMiliseconds / 1000
-            previousTimeStamp = timeStamp
-            const fps = Math.round(1 / elapsedTimeInSeconds)
-
-            const text = 'fps:' + fps
-            const textMetrics = context.measureText(text)
-            context.fillStyle = 'black'
-            context.fillRect(0, 0, textMetrics.width, 25)
-            context.fillStyle = 'white'
-            context.font = '25px Arial'
-            context.textBaseline = 'top'
-
-            context.fillText(text, 0, 0)
-
             draw()
             window.requestAnimationFrame(gameLoop)
         }
 
         function draw() {
+
+            //To do : turn 1D array (position) to 2D array(tileset)
+            const position = 1
+            const tile_width = 8
+            const tile_height = 12
+            const rescale = 1
+            context.drawImage(asset, position * tile_width, position * tile_height, tile_width, tile_height, 0, 0,
+                tile_height * rescale, tile_height * rescale)
 
         }
     </script>
