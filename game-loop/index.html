@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>HTML5 Game</title>
+    <meta name="description" content="A basic HTML5 game">
+    <meta name="author" content="[Your name]">
+</head>
+
+<body>
+
+    <p>Hello there</p>
+
+    <canvas id="canvas" width="750" height="400" style="border:1px solid lightgrey;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+        "use strict";
+
+        window.onload = init
+
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d')
+        let previousTimeStamp;
+
+        function init() {
+            window.requestAnimationFrame(gameLoop)
+        }
+
+        function gameLoop(timeStamp) {
+
+            //Calcul du FPS
+            const elpasedTimeInMiliseconds = timeStamp - previousTimeStamp
+            const elapsedTimeInSeconds = elpasedTimeInMiliseconds / 1000
+            previousTimeStamp = timeStamp
+            const fps = Math.round(1 / elapsedTimeInSeconds)
+
+            const text = context.measureText('fps:' + fps)
+            context.fillStyle = 'black'
+            context.fillRect(0, 0, text.width, 25)
+            context.fillStyle = 'white'
+            context.font = '25px Arial'
+            context.textBaseline = 'top'
+
+            context.fillText('fps:' + fps, 0, 0)
+
+            draw()
+            window.requestAnimationFrame(gameLoop)
+        }
+
+        function draw() {
+
+        }
+    </script>
+</body>
+
+</html>
+
+
+<!-- Hello world
+Installer lib Ramda
+Installer gestionnaire d'état Immer (opt) -->
