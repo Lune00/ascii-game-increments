@@ -9,15 +9,15 @@
     <meta name="author" content="[Your name]">
 </head>
 
-<body>
+<body style="background: black;">
 
     <p>Hello there</p>
 
+    <img src="./assets/tileset8x8.png" id="tileset" alt="" style="display: none;">
 
-    <img src="./assets/curses_640x300.bmp" id="tileset" alt="" style="display: block;">
-
-    <canvas id="canvas" width="750" height="400" style="border:1px solid lightgrey;">
-        Your browser does not support the HTML5 canvas tag.
+    <canvas id="canvas-tileset" width="300" height="400" style="border:1px solid lightgrey;">
+    </canvas>
+    <canvas id="canvas-tiles" width="300" height="400" style="border:1px solid lightgrey;">
     </canvas>
 
     <script>
@@ -25,30 +25,65 @@
 
         window.onload = init
 
-        const canvas = document.getElementById('canvas');
-        const context = canvas.getContext('2d')
-        let previousTimeStamp;
-        var asset
+        const ctx = document.getElementById('canvas-tileset').getContext('2d')
+        const ctx_tiles = document.getElementById('canvas-tiles').getContext('2d')
+
+        //Tiles
+        let tiles
+       
+        //TileSet properties
+        const tileW = 8
+        const tileH = 8
+        const tileSetWidth = 128
+        const tileSetHeight = 128
+
+        const nx = tileSetWidth / tileW
+        const ny = tileSetHeight / tileH
+        const nbTiles = nx * ny
+
+        console.log(nx,ny, nbTiles)
 
         function init() {
-            asset = document.getElementById('tileset')
+            const tileset = document.getElementById('tileset')
             window.requestAnimationFrame(gameLoop)
+
+            //Prepare tileSet to be parsed
+            drawTileSet(tileset)
+            tiles = parseTileSet()
+            drawTiles()
+        }
+
+        function parseTileSet() {
+
+            const tiles = Array()
+
+            for (let i = 0; i < nbTiles; i++) {
+                const x = (i % nx) * tileW
+                const y = Math.floor(i / nx) * tileH
+                console.log(x,y)
+                const tile = ctx.getImageData(x, y, tileW, tileH)
+                tiles.push(tile)
+            }
+            return tiles
+        }
+
+        function drawTiles(){
+            for (let i = 0; i < tiles.length; i++) {
+                ctx_tiles.putImageData(tiles[i], 0 , i * tileH)
+            }
+        }
+
+        function drawTileSet() {
+            ctx.drawImage(tileset, 0, 0)
         }
 
         function gameLoop(timeStamp) {
             draw()
-            window.requestAnimationFrame(gameLoop)
+            // window.requestAnimationFrame(gameLoop)
         }
 
-        function draw() {
 
-            //To do : turn 1D array (position) to 2D array(tileset)
-            const position = 1
-            const tile_width = 8
-            const tile_height = 12
-            const rescale = 1
-            context.drawImage(asset, position * tile_width, position * tile_height, tile_width, tile_height, 0, 0,
-                tile_height * rescale, tile_height * rescale)
+        function draw() {
 
         }
     </script>
