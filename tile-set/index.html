@@ -31,7 +31,7 @@
         //Tiles
         let tiles
        
-        //TileSet properties
+        //TileSet properties (a externaliser dans un fichier env lisible a l'execution)
         const tileW = 8
         const tileH = 8
         const tileSetWidth = 128
@@ -50,7 +50,7 @@
             //Prepare tileSet to be parsed
             drawTileSet(tileset)
             tiles = parseTileSet()
-            drawTiles()
+            drawTiles(tiles)
         }
 
         function parseTileSet() {
@@ -60,14 +60,14 @@
             for (let i = 0; i < nbTiles; i++) {
                 const x = (i % nx) * tileW
                 const y = Math.floor(i / nx) * tileH
-                console.log(x,y)
                 const tile = ctx.getImageData(x, y, tileW, tileH)
                 tiles.push(tile)
             }
+
             return tiles
         }
 
-        function drawTiles(){
+        function drawTiles(tiles){
             for (let i = 0; i < tiles.length; i++) {
                 ctx_tiles.putImageData(tiles[i], 0 , i * tileH)
             }
