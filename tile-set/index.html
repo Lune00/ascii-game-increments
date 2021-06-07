@@ -74,7 +74,8 @@
 
         function drawTiles(tiles) {
             for (let i = 0; i < tiles.length; i++) {
-                const tile_color_filtered = filterColor(tiles[i], pink, black)
+                const filtered_pixels = filterColor(tiles[i].data, pink, black)
+                tiles[i].data.set(filtered_pixels)
                 ctx_tiles.putImageData(tiles[i], 0, i * tileH)
             }
         }
@@ -88,24 +89,26 @@
             // window.requestAnimationFrame(gameLoop)
         }
 
-        function filterColor(tile, color_to_filter, new_color) {
+        function filterColor(pixels, color_to_filter, new_color) {
 
             //chaque tile => 256 valeurs (8x8pixels x4 valeurs(R,G,B,Transparency))
-            const pixels = [...tile.data]
+
+            //On fait une copie des pixels
+            const new_pixels = [...pixels]
 
             for (let i = 0; i < pixels.length; i += 4) {
 
                 const color = Array(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3])
 
                 if (sameColor(color, color_to_filter)){
-                    pixels[i] = color_to_filter[i]
-                    pixels[i+1] = color_to_filter[i+1]
-                    pixels[i+2] = color_to_filter[i+2]
-                    pixels[i+3] = color_to_filter[i+3]
+                    new_pixels[i] = color_to_filter[i]
+                    new_pixels[i+1] = color_to_filter[i+1]
+                    new_pixels[i+2] = color_to_filter[i+2]
+                    new_pixels[i+3] = color_to_filter[i+3]
                 }
             }
-            tile.data.set(pixels)
-            return tile
+          
+            return new_pixels
         }
 
         function sameColor(colorA, colorB) {
