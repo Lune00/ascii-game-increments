@@ -11,13 +11,11 @@
 
 <body style="background: black;">
 
-    <p>Hello there</p>
-
     <img src="./assets/tileset8x8.png" id="tileset" alt="" style="display: none;">
 
-    <canvas id="canvas-tileset" width="300" height="400" style="border:1px solid lightgrey;">
+    <canvas id="canvas-tileset" width="600" height="600" style="border:1px solid lightgrey;">
     </canvas>
-    <canvas id="canvas-tiles" width="300" height="400" style="border:1px solid lightgrey;">
+    <canvas id="canvas-tiles" width="300" height="600" style="border:1px solid lightgrey;">
     </canvas>
 
     <script>
@@ -30,7 +28,7 @@
 
         //Tiles
         let tiles
-       
+
         //TileSet properties (a externaliser dans un fichier env lisible a l'execution)
         const tileW = 8
         const tileH = 8
@@ -41,15 +39,22 @@
         const ny = tileSetHeight / tileH
         const nbTiles = nx * ny
 
-        console.log(nx,ny, nbTiles)
+        //Colors:
+        const pink = Array(255, 0, 255, 255)
+        const white = Array(255, 255, 255, 255)
+        const black = Array(0, 0, 0, 0)
+
+        console.log(nx, ny, nbTiles)
 
         function init() {
             const tileset = document.getElementById('tileset')
             window.requestAnimationFrame(gameLoop)
 
-            //Prepare tileSet to be parsed
+            //Canvas de chargement des tileSet à parser
             drawTileSet(tileset)
             tiles = parseTileSet()
+
+            //Canvas de rendu
             drawTiles(tiles)
         }
 
@@ -67,9 +72,10 @@
             return tiles
         }
 
-        function drawTiles(tiles){
+        function drawTiles(tiles) {
             for (let i = 0; i < tiles.length; i++) {
-                ctx_tiles.putImageData(tiles[i], 0 , i * tileH)
+                const tile_color_filtered = filterColor(tiles[i], pink, black)
+                ctx_tiles.putImageData(tiles[i], 0, i * tileH)
             }
         }
 
@@ -80,6 +86,33 @@
         function gameLoop(timeStamp) {
             draw()
             // window.requestAnimationFrame(gameLoop)
+        }
+
+        function filterColor(tile, color_to_filter, new_color) {
+
+            //chaque tile => 256 valeurs (8x8pixels x4 valeurs(R,G,B,Transparency))
+            const pixels = [...tile.data]
+
+            for (let i = 0; i < pixels.length; i += 4) {
+
+                const color = Array(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3])
+
+                if (sameColor(color, color_to_filter)){
+                    pixels[i] = color_to_filter[i]
+                    pixels[i+1] = color_to_filter[i+1]
+                    pixels[i+2] = color_to_filter[i+2]
+                    pixels[i+3] = color_to_filter[i+3]
+                }
+            }
+            tile.data.set(pixels)
+            return tile
+        }
+
+        function sameColor(colorA, colorB) {
+            return colorA[0] === colorB[0] &&
+                colorA[1] === colorB[1] &&
+                colorA[2] === colorB[2] &&
+                colorA[3] === colorB[3]
         }
 
 
