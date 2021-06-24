@@ -1,6 +1,6 @@
 # Configuration starter Typescript
 
-Un projet starter Typescript, avec un eslint configuré, test unitaires
+Un projet starter Typescript, avec un eslint configuré, test unitaires avec Jest
 
 ## Commandes utiles
 

@@ -1,7 +1,5 @@
-function sum(int:a,int:b):int{
-    return a + b
-}
+import sum from '../main/Foo'
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(3.toBe(3)
+test('basic', () => {
+  expect(sum(1, 2)).toBe(3)
 })

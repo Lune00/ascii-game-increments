@@ -1,10 +1,4 @@
-import Person from './Person'
+import sum from './Foo'
 
 const hello = (world: string = 'world'): string => `Hello you ${world}!`
 
-const person: Person = {
-  firstName: 'Foo',
-  lastName: 'Bar',
-}
-
-console.log(hello(person.firstName))
