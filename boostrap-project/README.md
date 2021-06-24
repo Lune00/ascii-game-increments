@@ -24,11 +24,23 @@ Par défaut, le compilateur `tsc` regarde dans le dossier `.src/`
 
 `npx tsc -w` 
 
-### Lint manuel
+## Eslint : Lint manuel
 
 `eslint --ext ts,tsx src/*`
 
+
+## Tests avec Jest
+
+installer `jest` (config `jest --init`), le transformer `@ts-jest`
+
 # Liens
 
+## Starter
 https://www.digitalocean.com/community/tutorials/typescript-new-project
+https://gitlab.com/javamind/typescript-starter/-/blob/master/jest.config.js
+
+## Eslint
 https://thesoreon.com/blog/how-to-set-up-eslint-with-typescript-in-vs-code
+
+## Jest et Typescript
+https://basarat.gitbook.io/typescript/intro-1/jest
