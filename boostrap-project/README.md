@@ -24,6 +24,10 @@ Par défaut, le compilateur `tsc` regarde dans le dossier `.src/`
 
 `npx tsc -w` 
 
+### Lint manuel
+
+`eslint --ext ts,tsx src/*`
+
 # Liens
 
 https://www.digitalocean.com/community/tutorials/typescript-new-project
