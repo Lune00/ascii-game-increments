@@ -1,6 +1,6 @@
-# Webpack starter JS
+# Webpack starter TypeScript
 
-Un projet starter avec webpack et JS
+Un projet starter avec webpack et TypeScript
 
 ## Intro
 
