@@ -22,6 +22,12 @@ Pour générer le bundle en utilisant le fichier de configuration
 
 Par défaut le runner `webpack`, s'il détecte un fichier de configuration, va implicitement le charger. Mais on peut le spécifier si on a une configuration plus complexe.
 
+## Build sans npx
+
+On ajoute un script au package.json `build: "wepback"`. Ensuite `npm run build`
+
 ## Webpack + Typescript
 
 ## Doc
+
+https://webpack.js.org/guides/getting-started/
