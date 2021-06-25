@@ -2,6 +2,7 @@ import _ from 'lodash'
 import './styles/style.css';
 import Icon from './assets/icon.png';
 
+
 function component() {
     const element = document.createElement('div');
   
