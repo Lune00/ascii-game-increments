@@ -18,5 +18,5 @@ Ouvrir le fichier `index.html`
 
 
 ## Sources
-[Procedural Generation: Programming The Universe, par Javidx9](https://www.youtube.com/watch?v=ZZY9YE7rZJw&t=1s)
-[Principe Noise RNG](https://www.youtube.com/watch?v=LWFzPP8ZbdU)
+- [Procedural Generation: Programming The Universe, par Javidx9](https://www.youtube.com/watch?v=ZZY9YE7rZJw&t=1s)
+- [Principe Noise RNG](https://www.youtube.com/watch?v=LWFzPP8ZbdU)
