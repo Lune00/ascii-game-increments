@@ -10,11 +10,11 @@ Génération d'un monde infini à la volée, utilisant le principe de *Noise RNG
 
 Ouvrir le fichier `index.html`
 
-## Keyboards Input
+## Keyboard Inputs
 
-`spacebar` : genere un nouveau monde
-`r` : reset la position à la position initiale
-`arrow keys` : se déplacer
+- `spacebar` : genere un nouveau monde
+- `r` : reset la position à la position initiale
+- `arrow keys` : se déplacer
 
 
 ## Sources
