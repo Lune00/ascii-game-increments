@@ -10,15 +10,7 @@ function init() {
     cxt = canvas.getContext('2d');
     //Dessine le monde a l'état initial
     let worldData = generateWorld()
-    drawWorld(worldData)
 }
-
-
-function drawWorld(data) {
-    // drawText(0, 0, 'Elapsed time for world generation (ms) : ' + data.elapsedTimeInMs)
-}
-
-
 
 // const red = data[i];
 // const green = data[i + 1];
@@ -44,13 +36,16 @@ function pixelOff(pixels, i) {
 }
 
 
+function myRand(){
+
+}
+
+
 function generateWorld() {
 
     const start = Date.now();
     //Do generation ...
-    const end = Date.now()
-    const elapsedTimeInMs = end - start
-
+    
     //Iterate sur tous les pixels
     const imageData = cxt.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
@@ -59,14 +54,19 @@ function generateWorld() {
     for (let i = 0; i < data.length; i += 4) {
 
         //Est ce que chaque pixel est une étoile ? Si oui on l'allume, sinon on l'éteind
-        const isStar = Math.random()
+        const isStar = Math.random() * 256  < 32
 
-        isStar < 0.5 ? pixelOn(data, i) : pixelOff(data, i)
+        isStar ? pixelOn(data, i) : pixelOff(data, i)
 
     }
 
+    const end = Date.now()
+    const elapsedTimeInMs = end - start
+
     //Update les pixels du canvas
     cxt.putImageData(imageData, 0, 0)
+    // drawText(0, 0, 'Elapsed time for world generation (ms) : ' + elapsedTimeInMs)
+    drawTextBG(cxt, 'Time(ms) : ' + elapsedTimeInMs, '24px Arial', 0 , 0)
 
     return {
         elapsedTimeInMs: elapsedTimeInMs
@@ -89,12 +89,42 @@ function drawCircle(x, y, r) {
 
 
 function drawText(x, y, text) {
-    cxt.fillStyle = 'white'
+    cxt.fillStyle = 'red'
     cxt.strokeStyle = 'black'
-    cxt.font = '14px Arial'
+    cxt.font = '24px Arial'
     cxt.textBaseline = 'top'
     cxt.beginPath()
     cxt.fillText(text, x, y)
+}
+
+function drawTextBG(ctx, txt, font, x, y) {
+
+    /// lets save current state as we make a lot of changes        
+    ctx.save();
+
+    /// set font
+    ctx.font = font;
+
+    /// draw text from top - makes life easier at the moment
+    ctx.textBaseline = 'top';
+
+    /// color for background
+    ctx.fillStyle = '#f50';
+    
+    /// get width of text
+    var width = ctx.measureText(txt).width;
+
+    /// draw background rect assuming height of font
+    ctx.fillRect(x, y, width, parseInt(font, 10));
+    
+    /// text color
+    ctx.fillStyle = '#000';
+
+    /// draw text on top
+    ctx.fillText(txt, x, y);
+    
+    /// restore original state
+    ctx.restore();
 }
 
 window.addEventListener("keydown", function (event) {
