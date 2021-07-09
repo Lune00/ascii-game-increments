@@ -38,8 +38,8 @@ function pixelOff(pixels, i) {
 
 function myRand(){
 
+    return 1
 }
-
 
 function generateWorld() {
 
