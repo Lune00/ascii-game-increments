@@ -1,5 +1,3 @@
-# ascii-game
+# Canvas / Game tests
 
-Projet de jeu en ASCII HTML5/TypeScript
-
-Incréments
+Différents petits projets/incréments de tests sur la Canvas
