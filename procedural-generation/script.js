@@ -8,9 +8,9 @@ window.onload = init;
 function init() {
     canvas = document.getElementById('canvas');
     cxt = canvas.getContext('2d');
-    //Dessine le monde a l'état initial
     let worldData = generateWorld()
 }
+
 
 // const red = data[i];
 // const green = data[i + 1];
@@ -36,28 +36,35 @@ function pixelOff(pixels, i) {
 }
 
 
-function myRand(){
-
-    return 1
+//En gros cree un hash
+function noiseFunction(position, seed) {
+    let mangled = position
+    mangled *= 0x3C6EF35F
+    mangled += 0x7FFFFFFF
+    mangled += seed
+    mangled *= mangled
+    mangled ^= (mangled >> 13)
+    return mangled
 }
+
 
 function generateWorld() {
 
     const start = Date.now();
     //Do generation ...
-    
+
     //Iterate sur tous les pixels
     const imageData = cxt.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
     //Chaque pixel est stocké dans 4 éléments (rgba) consécutifs du tableau
     for (let i = 0; i < data.length; i += 4) {
-
+        //Une seed pour chaque 'position' (seed : juste un hash de i)
+        //Comme ici on n'a qu'une coordonnée (i) on peut directement s'en servir comme seed
+        const random = noiseFunction(i, 10)
         //Est ce que chaque pixel est une étoile ? Si oui on l'allume, sinon on l'éteind
-        const isStar = Math.random() * 256  < 32
-
+        const isStar = random % 256 < 32
         isStar ? pixelOn(data, i) : pixelOff(data, i)
-
     }
 
     const end = Date.now()
@@ -66,7 +73,7 @@ function generateWorld() {
     //Update les pixels du canvas
     cxt.putImageData(imageData, 0, 0)
     // drawText(0, 0, 'Elapsed time for world generation (ms) : ' + elapsedTimeInMs)
-    drawTextBG(cxt, 'Time(ms) : ' + elapsedTimeInMs, '24px Arial', 0 , 0)
+    drawTextBG(cxt, 'Time(ms) : ' + elapsedTimeInMs, '24px Arial', 0, 0)
 
     return {
         elapsedTimeInMs: elapsedTimeInMs
@@ -110,19 +117,19 @@ function drawTextBG(ctx, txt, font, x, y) {
 
     /// color for background
     ctx.fillStyle = '#f50';
-    
+
     /// get width of text
     var width = ctx.measureText(txt).width;
 
     /// draw background rect assuming height of font
     ctx.fillRect(x, y, width, parseInt(font, 10));
-    
+
     /// text color
     ctx.fillStyle = '#000';
 
     /// draw text on top
     ctx.fillText(txt, x, y);
-    
+
     /// restore original state
     ctx.restore();
 }
@@ -146,4 +153,4 @@ window.addEventListener("keydown", function (event) {
 
     // Annuler l'action par défaut pour éviter qu'elle ne soit traitée deux fois.
     event.preventDefault();
-}, true);
+}, true)
